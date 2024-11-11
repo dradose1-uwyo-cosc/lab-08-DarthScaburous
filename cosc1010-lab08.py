@@ -1,9 +1,9 @@
-# Your Name Here
+# Caleb Egbert
 # UWYO COSC 1010
-# Submission Date
-# Lab XX
-# Lab Section:
-# Sources, people worked with, help given to:
+# November 10, 2024
+# Lab 08
+# Lab Section: 12
+# Sources, people worked with, help given to: TA
 # your
 # comments
 # here
@@ -13,7 +13,17 @@
 # If they can't be converted return false
 # Other wise return the converted int or float 
 # Floats should only have one decimal point in them 
-
+def convert_to_number(s):
+    try:
+        if '.' in s:
+            if s.count('.') == 1:
+                return float(s)
+            else:
+                return False
+        else:
+            return int(s)
+    except ValueError:
+        return False
 
 print("*" * 75)
 
@@ -37,9 +47,72 @@ print("*" * 75)
 # Exit on the word exit
 # Remember all inputs are strings, but the function needs ints or floats
 # Call your function and print the resulting list
+def slope_intercept(m, b, lower_x, upper_x):
+    if not (isinstance(lower_x, int) and isinstance(upper_x, int)) or lower_x > upper_x:
+        return False
+    y_values = []
+    for x in range(lower_x, upper_x + 1):
+        y = m * x + b
+        y_values.append(y)
+    return y_values
+
+while True:
+    m = input("Enter slope (m), or type 'exit' to quit: ")
+    if m.lower() == 'exit':
+        break
+    b = input("Enter y-intercept (b): ")
+    lower_x = input("Enter lower x bound: ")
+    upper_x = input("Enter upper x bound: ")
+    
+    m = convert_to_number(m)
+    b = convert_to_number(b)
+    lower_x = convert_to_number(lower_x)
+    upper_x = convert_to_number(upper_x)
+    
+    if m is not False and b is not False and isinstance(lower_x, int) and isinstance(upper_x, int):
+        print(slope_intercept(m, b, lower_x, upper_x))
+    else:
+        print("Invalid input. Please enter valid numbers.")
+
 
 print("*" * 75)
 
+import math
+
+def safe_sqrt(n):
+    if n < 0:
+        return None
+    return math.sqrt(n)
+
+def quadratic_solver(a, b, c):
+    discriminant = b ** 2 - 4 * a * c
+    sqrt_discriminant = safe_sqrt(discriminant)
+    if sqrt_discriminant is None:
+        return None 
+    x1 = (-b + sqrt_discriminant) / (2 * a)
+    x2 = (-b - sqrt_discriminant) / (2 * a)
+    return x1, x2
+
+
+while True:
+    a = input("Enter coefficient a, or type 'exit' to quit: ")
+    if a.lower() == 'exit':
+        break
+    b = input("Enter coefficient b: ")
+    c = input("Enter coefficient c: ")
+    
+    a = convert_to_number(a)
+    b = convert_to_number(b)
+    c = convert_to_number(c)
+    
+    if a is not False and b is not False and c is not False:
+        roots = quadratic_solver(a, b, c)
+        if roots:
+            print(f"The roots are: {roots[0]} and {roots[1]}")
+        else:
+            print("No real roots.")
+    else:
+        print("Invalid input. Please enter valid numbers.")
 
 # Write a function to solve the quadratic formula
 # https://en.wikipedia.org/wiki/Quadratic_formula
